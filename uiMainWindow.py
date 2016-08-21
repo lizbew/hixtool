@@ -20,6 +20,39 @@ class SidebarWidget(QtGui.QWidget):
         self.setLayout(vbox)
         
 
+class LinkButtonWidget(QtGui.QWidget):
+    
+    def __init__(self, title, link):
+        super(LinkButtonWidget, self).__init__()
+        self.title = title
+        self.link = link
+        
+        self.initUi()
+        
+    def initUi(self):
+        btn1 = QtGui.QPushButton(self.title)
+        
+        vbox = QtGui.QVBoxLayout()
+        vbox.addStretch(1)
+        vbox.addWidget(btn1)
+        vbox.addStretch(1)
+        
+        self.setLayout(vbox)
+
+
+class ContainerPanel(QtGui.QWidget):
+    def __init__(self):
+        super(ContainerPanel, self).__init__()
+        self.widgetMap = {}
+        self.initUi()
+        
+    def initUi(self):
+        self.vbox = QtGui.QVBoxLayout()
+        self.setLayout(self.vbox)
+        
+    def addWidget(self):
+        pass
+
 class MainWindow(QtGui.QMainWindow):
     
     def __init__(self):
@@ -54,6 +87,9 @@ class MainWindow(QtGui.QMainWindow):
         
         btn2 = QtGui.QPushButton('haha')
         grid.addWidget(btn2, 0,0)
+        
+        link1 = LinkButtonWidget('Baidu', 'http://www.baidu.com')
+        grid.addWidget(link1, 1,0)
         
         centralWidget.setLayout(grid)
     
