@@ -3,6 +3,8 @@
 from PyQt4 import QtGui, QtCore
 import psutil
 
+import datastore
+
 class SidebarWidget(QtGui.QWidget):
 
     def __init__(self):
@@ -83,14 +85,27 @@ class MainWindow(QtGui.QMainWindow):
         centralWidget = QtGui.QWidget()
         self.setCentralWidget(centralWidget)
         
+        col_num = 5
         grid = QtGui.QGridLayout()
         
         btn2 = QtGui.QPushButton('haha')
-        grid.addWidget(btn2, 0,0)
+        grid.addWidget(btn2, 0, 0)
         
         link1 = LinkButtonWidget('Baidu', 'http://www.baidu.com')
-        grid.addWidget(link1, 1,0)
+        grid.addWidget(link1, 0, 1)
         
+        # load from data files
+        try:
+            data_links = datastore.get_data_with_kind('links')
+            if data_links:
+                i = 3
+                for lnk in data_links:
+                    link_wdg = LinkButtonWidget(lnk['title'], lnk['url'])
+                    grid.addWidget(link_wdg, i/col_num, i % col_num)
+                    i += 1
+        except Exception as e:
+            print e
+
         centralWidget.setLayout(grid)
     
     
